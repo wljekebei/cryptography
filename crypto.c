@@ -34,7 +34,7 @@ void encode_string(const char string[], bool bytes[strlen(string)+1][8]) {
     int length = strlen(string);
     for (int i = 0; i < length; i++) {
         encode_char(string[i], bytes[i]);
-    }
+    } 
 }
 
 void decode_string(const int rows, bool bytes[][8], char string[]) {
