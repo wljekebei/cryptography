@@ -114,9 +114,9 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
             keySymbol -= 32; // to uppercase
         }
         int shift = (int)keySymbol - 65; // 2
-        char tmp = textSymbol - shift; // 88 (X) + 10
-        if (tmp > 90) {
-            tmp -= 26; // 
+        char tmp = textSymbol - shift; // 88 (X) - 10
+        if (tmp < 65) {
+            tmp += 26;
         }
         result[i] = tmp;
     }
