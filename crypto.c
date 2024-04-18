@@ -37,19 +37,20 @@ void encode_string(const char string[], bool bytes[strlen(string)+1][8]) {
     } 
 }
 
-// void decode_string(const int rows, bool bytes[][8], char string[]) {
-//     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
-//     int charValue = 0;
+void decode_string(const int rows, bool bytes[][8], char string[]) {
+    int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
+    int charValue = 0;
 
-//     for(int i = 0; i < rows; i++) {
-//         for(int j = 0; j < 8; j++) {
-//             if(bytes[i][j] == 1) {
-//                 charValue += bit_values[i];
-//             }
-//         }
-//         string[i] = charValue;
-//     }
-// }
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < 8; j++) {
+            if(bytes[i][j] == 1) {
+                charValue += bit_values[j];
+            }
+        }
+        string[i] = charValue;
+        charValue = 0;
+    }
+}
 
 void reverse(const char* text, char* result) {
     int amount = strlen(text);
@@ -119,5 +120,6 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
             tmp += 26;
         }
         result[i] = tmp;
+        printf("%d ", (int)tmp);
     }
 }
