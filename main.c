@@ -30,19 +30,35 @@ int main () {
 		printf("\n");
 	}
 
-	// task 4_2
-	bool bytes2[7][8] = {
-		{0,1,0,0,1,0,0,0},
-		{0,1,1,0,0,1,0,1},
-		{0,1,1,0,1,1,0,0},
-		{0,1,1,0,1,1,0,0},
-		{0,1,1,0,1,1,1,1},
-		{0,0,1,0,0,0,0,1},
-		{0,0,0,0,0,0,0,0}
-	};
-	char string[7];
-	decode_string(7, bytes2, string);
-	printf("%s\n", string);
+	// // task 4_2
+	// bool bytes2[7][8] = {
+	// 	{0,1,0,0,1,0,0,0},
+	// 	{0,1,1,0,0,1,0,1},
+	// 	{0,1,1,0,1,1,0,0},
+	// 	{0,1,1,0,1,1,0,0},
+	// 	{0,1,1,0,1,1,1,1},
+	// 	{0,0,1,0,0,0,0,1},
+	// 	{0,0,0,0,0,0,0,0}
+	// };
+	// char string[7];
+	// decode_string(7, bytes2, string);
+	// printf("%s\n", string);
+
+	// task 1
+	char reversed[255];
+	reverse("Hello world!", reversed);
+	printf("%s\n", reversed);
+
+	// task 2_1
+	char encrypted[255];
+	vigenere_encrypt("CoMPuTeR", "Hello world!", encrypted);
+	printf("%s\n", encrypted);
+
+	// task 2_2
+	char decrypted[255];
+	vigenere_decrypt("CoMPuTeR", encrypted, decrypted);
+	printf("%s\n", decrypted);
+
 
 	return 0;
 }

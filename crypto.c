@@ -37,16 +37,87 @@ void encode_string(const char string[], bool bytes[strlen(string)+1][8]) {
     } 
 }
 
-void decode_string(const int rows, bool bytes[][8], char string[]) {
-    int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
-    int charValue = 0;
+// void decode_string(const int rows, bool bytes[][8], char string[]) {
+//     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
+//     int charValue = 0;
 
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < 8; j++) {
-            if(bytes[i][j] == 1) {
-                charValue += bit_values[i];
-            }
+//     for(int i = 0; i < rows; i++) {
+//         for(int j = 0; j < 8; j++) {
+//             if(bytes[i][j] == 1) {
+//                 charValue += bit_values[i];
+//             }
+//         }
+//         string[i] = charValue;
+//     }
+// }
+
+void reverse(const char* text, char* result) {
+    int amount = strlen(text);
+    int j = 0;
+    for(int i = amount - 1; i >= 0; i--) {
+        result[j] = text[i];
+        j++;
+    }
+}
+
+void vigenere_encrypt(const char* key, const char* text, char* result) {
+    int textLength = strlen(text);
+    int keyLength = strlen(key); // 6
+    // Hello world! => Helloworld
+    for (int i = 0, j = 0; i < textLength; i++, j++) {
+        if (j >= keyLength) {
+            j = 0;
         }
-        string[i] = charValue;
+        char textSymbol = text[i];
+        if (textSymbol >= 97 && textSymbol <= 122) {
+            textSymbol -= 32; // to uppercase
+        }
+        // is not a letter
+        if (!(textSymbol >= 65 && textSymbol <= 90)) {
+            j--;
+            result[i] = textSymbol;
+            continue;
+        }
+        char keySymbol = key[j];
+        if (keySymbol >= 97 && keySymbol <= 122) {
+            keySymbol -= 32; // to uppercase
+        }
+        int shift = (int)keySymbol - 65; // 2
+        char tmp = textSymbol + shift; // 88 (X) + 10
+        if (tmp > 90) {
+            tmp -= 26; // 
+        }
+        result[i] = tmp;
+    }
+}
+
+void vigenere_decrypt(const char* key, const char* text, char* result) {
+    int textLength = strlen(text);
+    int keyLength = strlen(key); // 6
+    // Hello world! => Helloworld
+    for (int i = 0, j = 0; i < textLength; i++, j++) {
+        if (j >= keyLength) {
+            j = 0;
+        }
+        char textSymbol = text[i];
+        if (textSymbol >= 97 && textSymbol <= 122) {
+            textSymbol -= 32; // to uppercase
+        }
+        // is not a letter
+        if (!(textSymbol >= 65 && textSymbol <= 90)) {
+            j--;
+            result[i] = textSymbol;
+            continue;
+        }
+        char keySymbol = key[j];
+        if (keySymbol >= 97 && keySymbol <= 122) {
+            keySymbol -= 32; // to uppercase
+        }
+        int shift = (int)keySymbol - 65; // 2
+        char tmp = textSymbol - shift; // 88 (X) + 10
+        if (tmp > 90) {
+            tmp -= 26; // 
+        }
+        result[i] = tmp;
     }
 }
