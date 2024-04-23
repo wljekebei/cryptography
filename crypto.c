@@ -126,12 +126,25 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
 
 void bit_encrypt(const char* text, char* result) {
     bool bits[8];
+    bool encr[8];
     int len = strlen(text);
     for(int i = 0; i < len; i++) {
         encode_char(text[i], bits);
-        for(int j = 0; j < 8; j++) {
-            printf("%d", bits[j]);
+        for(int j = 0; j < 4; j += 2) {
+            encr[j] = bits[j + 1];
+            encr[j + 1] = bits[j];
         }
+        for(int j = 0; j < 4; j++) {
+            if(encr[j] != bits[j + 4]) {
+                encr[j + 4] = 1;
+            } else if(encr[j] == bits[j + 4]) {
+                encr[j + 4] = 0;
+            }
+        }
+        for(int j = 0; j < 8; j++) {
+            printf("%d", encr[j]);
+        }
+        result[i] = decode_char(encr);
         printf("\n");
     }
 }
