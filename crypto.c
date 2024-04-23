@@ -123,3 +123,15 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
         printf("%d ", (int)tmp);
     }
 }
+
+void bit_encrypt(const char* text, char* result) {
+    bool bits[8];
+    int len = strlen(text);
+    for(int i = 0; i < len; i++) {
+        encode_char(text[i], bits);
+        for(int j = 0; j < 8; j++) {
+            printf("%d", bits[j]);
+        }
+        printf("\n");
+    }
+}
