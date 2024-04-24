@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-int uscharlen(const unsigned char* str);
+int uscharlen(unsigned char* str);
 
 void encode_char(const unsigned char character, bool bits[8]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
@@ -57,7 +57,7 @@ void decode_string(const int rows, bool bytes[][8], char string[]) {
 void reverse(const char* text, char* result) {
     int amount = strlen(text);
     int j = 0;
-    for(int i = amount - 1; i >= 0; i--) {
+    for(int i = amount - 1; i > -1; i--) {
         result[j] = text[i];
         j++;
     }
@@ -147,10 +147,11 @@ void bit_encrypt(const char* text, unsigned char* result) {
     }
 }
 
-void bit_decrypt(const unsigned char* text, unsigned char* result) {
+void bit_decrypt(unsigned char* text, unsigned char* result) {
     bool bits[8];
     bool encr[8];
     int len = uscharlen(text);
+    printf("LENGTH: %d\n", len);
     for(int i = 0; i < len; i++) {
         encode_char(text[i], bits);
         for(int j = 4; j < 8; j++) {
@@ -165,11 +166,10 @@ void bit_decrypt(const unsigned char* text, unsigned char* result) {
             encr[j + 1] = bits[j];
         }
         result[i] = decode_char(encr);
-        break;
     }  
 }
 
-int uscharlen(const unsigned char* str) {
+int uscharlen(unsigned char* str) {
     int counter = 0;
     for(int i = 0; i < 9999; i++) {
         if(str[i] != '\0' && str[i] != (char)10) {
@@ -178,6 +178,5 @@ int uscharlen(const unsigned char* str) {
             break;
         }
     }
-    printf("COUNTER: %d\n", counter);
     return counter;
 }
