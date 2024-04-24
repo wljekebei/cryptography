@@ -20,3 +20,5 @@ void decode_string(const int rows, bool bytes[][8], char string[]);
 void bit_encrypt(const char* text, unsigned char* result);
 
 void bit_decrypt(const unsigned char* text, unsigned char* result);
+
+int uscharlen(unsigned char* str);

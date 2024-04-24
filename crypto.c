@@ -61,6 +61,7 @@ void reverse(const char* text, char* result) {
         result[j] = text[i];
         j++;
     }
+    result[amount] = '\0'; 
 }
 
 void vigenere_encrypt(const char* key, const char* text, char* result) {
@@ -122,7 +123,7 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
             tmp += 26;
         }
         result[i] = tmp;
-        printf("%d ", (int)tmp);
+        // printf("%d ", (int)tmp);
     }
 }
 
@@ -145,13 +146,13 @@ void bit_encrypt(const char* text, unsigned char* result) {
         }
         result[i] = decode_char(encr);
     }
+    result[len] = '\0';
 }
 
 void bit_decrypt(unsigned char* text, unsigned char* result) {
     bool bits[8];
     bool encr[8];
     int len = uscharlen(text);
-    printf("LENGTH: %d\n", len);
     for(int i = 0; i < len; i++) {
         encode_char(text[i], bits);
         for(int j = 4; j < 8; j++) {
@@ -166,17 +167,15 @@ void bit_decrypt(unsigned char* text, unsigned char* result) {
             encr[j + 1] = bits[j];
         }
         result[i] = decode_char(encr);
-    }  
+    } 
+    result[len] = '\0'; 
 }
 
 int uscharlen(unsigned char* str) {
-    int counter = 0;
-    for(int i = 0; i < 9999; i++) {
-        if(str[i] != '\0' && str[i] != (char)10) {
-            counter++;
-        } else {
-            break;
-        }
+    int i = 0;
+
+    while(str[i] != '\0') {
+        i++;
     }
-    return counter;
+    return i;
 }

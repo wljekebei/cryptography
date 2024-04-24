@@ -61,8 +61,8 @@ int main () {
 
 	// task 5_1
 	unsigned char encrypted2[100];
-	bit_encrypt("Hello world!", encrypted2);
-	for(int i=0; i < 12;i++) {
+	bit_encrypt("Hello", encrypted2);
+	for(int i=0; i < 5;i++) {
 		printf("%02x ", encrypted2[i]);
 		//80 9c 95 95 96 11 bc 96 b9 95 9d 10
 	}
