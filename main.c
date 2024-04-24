@@ -18,7 +18,7 @@ int main () {
 	printf("%c\n", decode_char(bits2));
 
 	// task 4_1
-	char* text = "Hello, how are you?";
+	const char* text = "Hello, how are you?";
 	const int len = strlen(text);
 	bool bytes1[len+1][8];
 	encode_string(text, bytes1);
@@ -59,14 +59,20 @@ int main () {
 	vigenere_decrypt("CoMPuTeR", encrypted, decrypted);
 	printf("%s\n", decrypted);
 
-	char encrypted2[100];
+	unsigned char encrypted2[100];
 
-	// basic test with long text
+	// task 5_1
 	bit_encrypt("Hello world!", encrypted2);
 	for(int i=0; i < 12;i++) {
 		printf("%02x ", (unsigned char)encrypted2[i]);
 		//80 9c 95 95 96 11 bc 96 b9 95 9d 10
 	}
+	printf("\n");
+
+	// task 5_2
+	unsigned char decrypted2[100];
+	bit_decrypt(encrypted2, decrypted2);
+	printf("%s\n", decrypted2);
 
 	return 0;
 }

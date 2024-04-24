@@ -3,7 +3,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-void encode_char(const char character, bool bits[8]) {
+int uscharlen(const unsigned char* str);
+
+void encode_char(const unsigned char character, bool bits[8]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     int charValue = (int)character;
 
@@ -16,7 +18,7 @@ void encode_char(const char character, bool bits[8]) {
     }
 }
 
-char decode_char(const bool bits[8]) {
+unsigned char decode_char(const bool bits[8]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     int charValue = 0;
 
@@ -27,10 +29,10 @@ char decode_char(const bool bits[8]) {
     }
     char symbol = (int)charValue;
 
-    return symbol;
+    return (unsigned char)symbol;
 }
 
-void encode_string(const char string[], bool bytes[strlen(string)+1][8]) {
+void encode_string(const char string[], bool bytes[][8]) {
     int length = strlen(string);
     for (int i = 0; i < length; i++) {
         encode_char(string[i], bytes[i]);
@@ -124,7 +126,7 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
     }
 }
 
-void bit_encrypt(const char* text, char* result) {
+void bit_encrypt(const char* text, unsigned char* result) {
     bool bits[8];
     bool encr[8];
     int len = strlen(text);
@@ -141,10 +143,41 @@ void bit_encrypt(const char* text, char* result) {
                 encr[j + 4] = 0;
             }
         }
-        for(int j = 0; j < 8; j++) {
-            printf("%d", encr[j]);
+        result[i] = decode_char(encr);
+    }
+}
+
+void bit_decrypt(const unsigned char* text, unsigned char* result) {
+    bool bits[8];
+    bool encr[8];
+    int len = uscharlen(text);
+    for(int i = 0; i < len; i++) {
+        encode_char(text[i], bits);
+        for(int j = 4; j < 8; j++) {
+            if(bits[j - 4] == bits[j]) {
+                encr[j] = 0;
+            } else if(bits[j - 4] != bits[j]) {
+                encr[j] = 1;
+            }
+        }
+        for(int j = 0; j < 4; j += 2) {
+            encr[j] = bits[j + 1];
+            encr[j + 1] = bits[j];
         }
         result[i] = decode_char(encr);
-        printf("\n");
+        break;
+    }  
+}
+
+int uscharlen(const unsigned char* str) {
+    int counter = 0;
+    for(int i = 0; i < 9999; i++) {
+        if(str[i] != '\0' && str[i] != (char)10) {
+            counter++;
+        } else {
+            break;
+        }
     }
+    printf("COUNTER: %d\n", counter);
+    return counter;
 }
