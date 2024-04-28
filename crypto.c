@@ -5,7 +5,7 @@
 
 int uscharlen(unsigned char* str);
 
-void encode_char(const unsigned char character, bool bits[8]) {
+void encode_char( unsigned char character, bool bits[8]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     int charValue = (int)character;
 
@@ -18,7 +18,7 @@ void encode_char(const unsigned char character, bool bits[8]) {
     }
 }
 
-unsigned char decode_char(const bool bits[8]) {
+unsigned char decode_char( bool bits[8]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     int charValue = 0;
 
@@ -32,14 +32,14 @@ unsigned char decode_char(const bool bits[8]) {
     return (unsigned char)symbol;
 }
 
-void encode_string(const char string[], bool bytes[][8]) {
+void encode_string( char string[], bool bytes[][8]) {
     int length = strlen(string);
     for (int i = 0; i < length; i++) {
         encode_char(string[i], bytes[i]);
-    } 
+    }
 }
 
-void decode_string(const int rows, bool bytes[][8], char string[]) {
+void decode_string( int rows, bool bytes[][8], char string[]) {
     int bit_values[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     int charValue = 0;
 
@@ -54,7 +54,7 @@ void decode_string(const int rows, bool bytes[][8], char string[]) {
     }
 }
 
-void reverse(const char* text, char* result) {
+void reverse( char* text, char* result) {
     int amount = strlen(text);
     int j = 0;
     for(int i = amount - 1; i > -1; i--) {
@@ -64,9 +64,9 @@ void reverse(const char* text, char* result) {
     result[amount] = '\0'; 
 }
 
-void vigenere_encrypt(const char* key, const char* text, char* result) {
+void vigenere_encrypt( char* key,  char* text, char* result) {
     int textLength = strlen(text);
-    int keyLength = strlen(key); // 6
+    int keyLength = strlen(key) - 1; // 6
     // Hello world! => Helloworld
     for (int i = 0, j = 0; i < textLength; i++, j++) {
         if (j >= keyLength) {
@@ -93,11 +93,12 @@ void vigenere_encrypt(const char* key, const char* text, char* result) {
         }
         result[i] = tmp;
     }
+    result[textLength] = '\0';
 }
 
-void vigenere_decrypt(const char* key, const char* text, char* result) {
+void vigenere_decrypt( char* key,  char* text, char* result) {
     int textLength = strlen(text);
-    int keyLength = strlen(key); // 6
+    int keyLength = strlen(key) - 1; // 6
     // Hello world! => Helloworld
     for (int i = 0, j = 0; i < textLength; i++, j++) {
         if (j >= keyLength) {
@@ -125,9 +126,10 @@ void vigenere_decrypt(const char* key, const char* text, char* result) {
         result[i] = tmp;
         // printf("%d ", (int)tmp);
     }
+    result[textLength] = '\0';
 }
 
-void bit_encrypt(const char* text, unsigned char* result) {
+void bit_encrypt( char* text, unsigned char* result) {
     bool bits[8];
     bool encr[8];
     int len = strlen(text);

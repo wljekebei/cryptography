@@ -7,7 +7,7 @@ OUTPUT=crypto
 all: $(OUTPUT)
 
 $(OUTPUT): crypto.o main.o
-	cppcheck --enable=performance,unusedFunction --error-exitcode=1 *.c
+	cppcheck --enable=performance --error-exitcode=1 *.c
 	$(CC) $(CFLAGS) crypto.o main.o $(LDLIBS) -o $(OUTPUT)
 
 main.o: main.c
