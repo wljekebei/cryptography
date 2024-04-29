@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include "crypto.h"
 
-void wait();
-
 int main () {
 	int num = 0;
 	printf("Encrypt:\n");
@@ -16,9 +14,15 @@ int main () {
 	scanf("%d", &num);
 	printf("\n");
 	char input[999];
+	unsigned char uinput[999];
 	printf("Enter your text: ");
-	wait();
+	char c;
+	scanf("%c", &c);
+	if(num != 5) {
 	fgets(input, 999, stdin);
+	} else {
+	fgets((char *)uinput, 999, stdin);
+	}
 
 	if(num == 1) {
 		//reverse
@@ -41,6 +45,50 @@ int main () {
 		//reverse
 		char final[999];
 		reverse(output, final);
+		printf("%s\n", final);
+	} else if(num == 2) {
+		unsigned char output[999];
+		bit_encrypt(input, output);
+		int size = strlen(input) - 1;
+		for(int i=0; i < size; i++) {
+			printf("%02x ", output[i]);
+		}
+	} else if(num == 5) { // what to input ?
+		unsigned char output[999];
+		bit_decrypt(uinput, output);
+		printf("%s\n", output);
+	} else if(num == 3) {
+		//reverse
+		char output[999];
+		reverse(input, output);
+		//vigenere
+		char key[999];
+		char second[999];
+		printf("Enter key for Vigenère cipher: ");
+		fgets(key, 999, stdin);
+		vigenere_encrypt(key, output, second);
+		//bits
+		unsigned char final[999];
+		bit_encrypt(input, final);
+		int size = strlen(input) - 1;
+		for(int i=0; i < size; i++) {
+			printf("%02x ", output[i]);
+		}
+		printf("%s\n", final);
+	}
+	else if(num == 6) { // what to input?
+		//bits
+		unsigned char output[999];
+		bit_encrypt(input, output);
+		//vigenere
+		char key[999];
+		char second[999];
+		printf("Enter key for Vigenère cipher: ");
+		fgets(key, 999, stdin);
+		vigenere_encrypt(key, (char *)output, second);
+		//reverse
+		char final[999];
+		reverse(input, final);
 		printf("%s\n", final);
 	}
 
@@ -115,9 +163,4 @@ int main () {
 	// printf("%s\n", decrypted2);
 
 	// return 0;
-}
-
-void wait() {
-	char c;
-	scanf("%c", &c);
 }
