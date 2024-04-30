@@ -7,7 +7,7 @@
 int main () {
 	int num = 0;
 	printf("Encrypt:\n");
-	printf("1 - 1st lvl (Reverse + Vigenère cipher)\n2 - 2nd lvl (bit chaos)\n3 - 3rd lvl (reverse + bit chaos)\n");
+	printf("1 - 1st lvl (Reverse + Vigenère cipher)\n2 - 2nd lvl (bit chaos)\n3 - 3rd lvl (everything)\n");
 	printf("Decrypt:\n");
 	printf("4 - 1st lvl decrypt\n5 - 2nd lvl decrypt\n6 - 3rd lvl decrypt\n");
 	printf("\nEnter number: ");
@@ -66,9 +66,15 @@ int main () {
 		//reverse
 		char output[999];
 		reverse(input, output);
+		// vigenere
+		char key[999];
+		char output2[999];
+		printf("Enter key for Vigenère cipher: ");
+		fgets(key, 999, stdin);
+		vigenere_encrypt(key, output, output2);
 		//bits
 		unsigned char final[999];
-		bit_encrypt(output, final);
+		bit_encrypt(output2, final);
 		int size = uscharlen(final);
 		for(int i=1; i < size; i++) {
 			printf("%02x ", final[i]);
@@ -78,9 +84,15 @@ int main () {
 		//bits
 		unsigned char output[999];
 		bit_decrypt(uinput, output);
+		// vigenere
+		char key[999];
+		char output2[999];
+		printf("Enter key for Vigenère cipher: ");
+		fgets(key, 999, stdin);
+		vigenere_decrypt(key, (char*)output, output2);
 		//reverse
 		char final[999];
-		reverse((char*)output, final);
+		reverse(output2, final);
 		printf("%s\n", final);
 	}
 }
